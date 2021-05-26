@@ -1,6 +1,7 @@
 package Test1;
 import Base.Base;
 import Utilities.BrowserUtils;
+import com.github.javafaker.Faker;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -39,18 +40,18 @@ public class PuppyTest extends Base {
     @Test(priority = 1)
     public void BrooksTest() {
 
-// actual and expected result
+    // actual and expected result
         String ActualTitle = driver.getTitle();
         String ExpectedTitle = "Sally's Puppy Adoption Agency";
-// validating the title
+    // validating the title
         System.out.println("Page title is: " + ExpectedTitle);
         Assert.assertEquals(ActualTitle, ExpectedTitle);
-// wait
+    // wait
         BrowserUtils.sleep(5);
-// click Brook's detatils
+    // click Brook's detatils
         driver.findElement(By.xpath("//div[@id=\"content\"]/div[2]/div/div[4]/form/div/input")).click();
 
-// verifying that Brooks image is displayed or not
+    // verifying that Brooks image is displayed or not
         boolean img = driver.findElement(By.xpath("//div[@id=\"content\"]/div[2]/img")).isDisplayed();
         Assert.assertTrue(img);
         BrowserUtils.sleep(5);
@@ -60,16 +61,16 @@ public class PuppyTest extends Base {
     @Test(priority = 2)
     public void HannaTest() {
         BrowserUtils.sleep(5);
-        // click to Hanna's details
+    // click to Hanna's details
         driver.findElement(By.xpath("//div[@id=\"content\"]/div[3]/div/div[4]/form/div/input")).click();
         BrowserUtils.sleep(5);
 
-        //click to "Adopt Me!"
+    //click to "Adopt Me!"
         driver.findElement(By.xpath("//div[@id=\"content\"]/div[2]/div/form/div/input[1]")).click();
-        //click the checkbox
+    //click the checkbox
         driver.findElement(By.xpath("//input[@id=\"carrier\"]")).click();
         BrowserUtils.sleep(5);
-        //verify that if checkbox is selected
+    //verify that if checkbox is selected
         boolean checkbox = driver.findElement(By.xpath("//*[@id=\"carrier\"]")).isSelected();
         Assert.assertTrue(checkbox);
 
@@ -80,14 +81,14 @@ public class PuppyTest extends Base {
     public void SpudTest() {
 
         BrowserUtils.sleep(5);
-        //go to the next page
+    //go to the next page
         driver.findElement(By.xpath("//div[@id=\"content\"]/div[6]/a[3]")).click();
         BrowserUtils.sleep(5);
 
     //click to Spud's details
         driver.findElement(By.xpath("//div[@id=\"content\"]/div[3]/div/div[4]/form/div/input")).click();
         BrowserUtils.sleep(5);
-        //click "Adopt Me!
+    //click "Adopt Me!
         driver.findElement(By.xpath("//div[@id=\"content\"]/div[2]/div/form/div/input[1]")).click();
         BrowserUtils.sleep(5);
     //click to checkboxes
@@ -104,11 +105,16 @@ public class PuppyTest extends Base {
         driver.findElement(By.xpath("//div[@id=\"content\"]/div[2]/form[1]/div/input")).click();
         BrowserUtils.sleep(5);
 
-        driver.findElement(By.xpath("//*[@id=\"order_name\"]")).sendKeys("Alex");
+    //for random credentials
+        Faker faker = new Faker();
+            String name= faker.name().firstName();
+            String address= faker.address().fullAddress();
+
+        driver.findElement(By.xpath("//*[@id=\"order_name\"]")).sendKeys(name);
         BrowserUtils.sleep(3);
-        driver.findElement(By.xpath("//*[@id=\"order_address\"]")).sendKeys("5006 Mclean Dr");
+        driver.findElement(By.xpath("//*[@id=\"order_address\"]")).sendKeys(address);
         BrowserUtils.sleep(3);
-        driver.findElement(By.xpath("//*[@id=\"order_email\"]")).sendKeys("alex@gmail.com");
+        driver.findElement(By.xpath("//*[@id=\"order_email\"]")).sendKeys("solutions@gmail.com");
         BrowserUtils.sleep(3);
         Select paymentOptions = new Select(driver.findElement(By.xpath("//*[@id=\"order_pay_type\"]")));
         paymentOptions.selectByIndex(2);
